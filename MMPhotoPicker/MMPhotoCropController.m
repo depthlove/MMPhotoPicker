@@ -1,6 +1,6 @@
 //
 //  MMPhotoCropController.m
-//  MMPhotoPickerDemo
+//  MMPhotoPicker
 //
 //  Created by LEA on 2017/11/10.
 //  Copyright © 2017年 LEA. All rights reserved.
@@ -11,19 +11,19 @@
 
 @interface MMPhotoCropController ()
 
-//图片显示视图
+// 图片显示视图
 @property (nonatomic,strong) UIImageView *imageView;
-//蒙版
+// 蒙版
 @property (nonatomic,strong) UIView *overlayView;
-//裁剪frame
+// 裁剪frame
 @property (nonatomic, assign) CGRect cropFrame;
-//记录frame
+// 记录frame
 @property (nonatomic, assign) CGRect oldFrame;
-//最大frame
+// 最大frame
 @property (nonatomic, assign) CGRect largeFrame;
-//最终frame
+// 最终frame
 @property (nonatomic, assign) CGRect latestFrame;
-//比例
+// 比例
 @property (nonatomic, assign) CGFloat limitRatio;
 
 @end
@@ -37,17 +37,17 @@
     self.view.backgroundColor = [UIColor blackColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarItemAction)];
     
-    //添加视图
+    // 添加视图
     [self.view addSubview:self.imageView];
     [self.view addSubview:self.overlayView];
     
-    //添加手势
+    // 添加手势
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureAction:)];
     [self.view addGestureRecognizer:pinch];
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureAction:)];
     [self.view addGestureRecognizer:pan];
     
-    //赋值
+    // 赋值
     if (_imageCropSize.width * _imageCropSize.height == 0) {
         _imageCropSize = CGSizeMake(self.view.width, self.view.width);
     }
@@ -63,7 +63,7 @@
     self.imageView.frame = _oldFrame;
     self.imageView.image = _originalImage;
     
-    //裁剪区
+    // 裁剪区
     [self overlayClipping];
 }
 
@@ -110,7 +110,7 @@
 {
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     CGMutablePathRef path = CGPathCreateMutable();
-    //图片高度与截取框高度保持一致
+    // 图片高度与截取框高度保持一致
     if(_oldFrame.size.height >=  _cropFrame.size.height) {
         CGPathAddRect(path, nil, CGRectMake(0, 0, _cropFrame.origin.x, self.overlayView.height));
         CGPathAddRect(path, nil, CGRectMake(_cropFrame.origin.x + _cropFrame.size.width, 0, self.overlayView.width - _cropFrame.origin.x - _cropFrame.size.width, self.overlayView.height));
@@ -131,7 +131,7 @@
 #pragma mark - 手势处理
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)pinch
 {
-    //缩放
+    // 缩放
     UIView *view = self.imageView;
     if (pinch.state == UIGestureRecognizerStateBegan || pinch.state == UIGestureRecognizerStateChanged)
     {
@@ -155,7 +155,7 @@
 
 - (void)panGestureAction:(UIPanGestureRecognizer *)pan
 {
-    //拖动
+    // 拖动
     UIView *view = self.imageView;
     if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged)
     {

@@ -1,6 +1,6 @@
 //
 //  MMPhotoUtil.m
-//  MMPhotoPickerDemo
+//  MMPhotoPicker
 //
 //  Created by LEA on 2017/11/10.
 //  Copyright © 2017年 LEA. All rights reserved.
@@ -31,49 +31,50 @@ static NSString *kPhotoAlbum = @"PhotoDemo";
         dispatch_async(dispatch_get_main_queue(), ^{
             switch (status)
             {
-                case PHAuthorizationStatusAuthorized://权限打开
+                case PHAuthorizationStatusAuthorized: //权限打开
                 {
-                    //获取所有自定义相册
-                    PHFetchResult *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
-                    //筛选
-                    __block PHAssetCollection *simoCollection = nil;
+                    // 获取所有自定义相册
+                    PHFetchResult *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum
+                                                                                          subtype:PHAssetCollectionSubtypeAlbumRegular
+                                                                                          options:nil];
+                    // 筛选[如果已经存在，则无需再创建]
+                    __block PHAssetCollection *createCollection = nil;
                     __block NSString *collectionID = nil;
                     for (PHAssetCollection *collection in collections)  {
                         if ([collection.localizedTitle isEqualToString:kPhotoAlbum]) {
-                            simoCollection = collection;
+                            createCollection = collection;
                             break;
                         }
                     }
-                    if (!simoCollection) {
-                        //创建相册
+                    if (!createCollection) {
+                        // 创建相册
                         [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
                             collectionID = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:kPhotoAlbum].placeholderForCreatedAssetCollection.localIdentifier;
                         } error:nil];
-                        //取出
-                        simoCollection = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[collectionID] options:nil].firstObject;
+                        // 取出
+                        createCollection = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[collectionID] options:nil].firstObject;
                     }
-                    //保存图片
+                    // 保存图片
                     __block NSString *assetId = nil;
                     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                         assetId = [PHAssetCreationRequest creationRequestForAssetFromImage:image].placeholderForCreatedAsset.localIdentifier;
                     } completionHandler:^(BOOL success, NSError * _Nullable error) {
                         if (error) {
-                            NSLog(@"保存橡胶相册失败");
+                            NSLog(@"保存至'所有图片'失败");
                             return ;
                         }
                         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                            PHAssetCollectionChangeRequest *request = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:simoCollection];
+                            PHAssetCollectionChangeRequest *request = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:createCollection];
                             PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetId] options:nil].firstObject;
                             // 添加图片到相册中
                             [request addAssets:@[asset]];
                             
                         } completionHandler:^(BOOL success, NSError * _Nullable error) {
                             if (error) {
-                                NSLog(@"保存自定义相册失败");
+                                NSLog(@"保存'自定义相册'失败");
                             }
                         }];
                     }];
-                    
                     break;
                 }
                 case PHAuthorizationStatusDenied:
@@ -107,43 +108,46 @@ static NSString *kPhotoAlbum = @"PhotoDemo";
             {
                 case PHAuthorizationStatusAuthorized://权限打开
                 {
-                    //获取所有自定义相册
-                    PHFetchResult *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
-                    //筛选
-                    __block PHAssetCollection *simoCollection = nil;
+                    // 获取所有自定义相册
+                    PHFetchResult *collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum
+                                                                                          subtype:PHAssetCollectionSubtypeAlbumRegular
+                                                                                          options:nil];
+                 
+                    // 筛选[如果已经存在，则无需再创建]
+                    __block PHAssetCollection *createCollection = nil;
                     __block NSString *collectionID = nil;
                     for (PHAssetCollection *collection in collections)  {
                         if ([collection.localizedTitle isEqualToString:kPhotoAlbum]) {
-                            simoCollection = collection;
+                            createCollection = collection;
                             break;
                         }
                     }
-                    if (!simoCollection) {
-                        //创建相册
+                    if (!createCollection) {
+                        // 创建相册
                         [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
                             collectionID = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:kPhotoAlbum].placeholderForCreatedAssetCollection.localIdentifier;
                         } error:nil];
-                        //取出
-                        simoCollection = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[collectionID] options:nil].firstObject;
+                        // 取出
+                        createCollection = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[collectionID] options:nil].firstObject;
                     }
-                    //保存图片
+                    // 保存视频
                     __block NSString *assetId = nil;
                     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                         assetId = [PHAssetCreationRequest creationRequestForAssetFromVideoAtFileURL:videoURL].placeholderForCreatedAsset.localIdentifier;
                     } completionHandler:^(BOOL success, NSError * _Nullable error) {
                         if (error) {
-                            NSLog(@"视频保存橡胶相册失败");
+                            NSLog(@"保存至'所有图片'失败");
                             return ;
                         }
                         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                            PHAssetCollectionChangeRequest *request = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:simoCollection];
+                            PHAssetCollectionChangeRequest *request = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:createCollection];
                             PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetId] options:nil].firstObject;
-                            // 添加图片到相册中
+                            // 添加视频到相册中
                             [request addAssets:@[asset]];
                             
                         } completionHandler:^(BOOL success, NSError * _Nullable error) {
                             if (error) {
-                                NSLog(@"视频保存自定义相册失败");
+                                NSLog(@"保存'自定义相册'失败");
                             }
                         }];
                     }];
@@ -193,13 +197,9 @@ static NSString *kPhotoAlbum = @"PhotoDemo";
     PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
     option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
     option.networkAccessAllowed = YES;
-    [[PHCachingImageManager defaultManager] requestImageForAsset:asset
-                                                      targetSize:size
-                                                     contentMode:PHImageContentModeDefault
-                                                         options:option
-                                                   resultHandler:^(UIImage * _Nullable image, NSDictionary * _Nullable info) {
-                                                       if (completion)  completion(image);
-                                                   }];
+    [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeDefault options:option resultHandler:^(UIImage * _Nullable image, NSDictionary * _Nullable info) {
+        if (completion)  completion(image);
+    }];
 }
 
 // 获取asset对应的图片

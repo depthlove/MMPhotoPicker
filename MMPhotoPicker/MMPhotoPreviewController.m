@@ -1,6 +1,6 @@
 //
 //  MMPhotoPreviewController.m
-//  MMPhotoPickerDemo
+//  MMPhotoPicker
 //
 //  Created by LEA on 2017/11/10.
 //  Copyright © 2017年 LEA. All rights reserved.
@@ -149,10 +149,9 @@
 
 - (void)loadImage
 {
-    for (UIView *v in [_scrollView subviews]) {
-        [v removeFromSuperview];
-    }
-    
+    // 移除
+    [_scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    // 重新添加
     NSInteger count = [self.assetArray count];
     for (int i = 0; i < count; i ++)
     {

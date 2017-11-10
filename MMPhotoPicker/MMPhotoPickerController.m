@@ -182,7 +182,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //跳转
+    // 跳转
     MMPhotoAlbum *photoAlbum = [self.photoAlbums objectAtIndex:indexPath.row];
     [self pushAlbumByPhotoAlbum:photoAlbum animated:YES];
 }

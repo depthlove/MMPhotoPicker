@@ -1,6 +1,6 @@
 //
 //  MMPhotoAssetController.m
-//  MMPhotoPickerDemo
+//  MMPhotoPicker
 //
 //  Created by LEA on 2017/11/10.
 //  Copyright © 2017年 LEA. All rights reserved.
@@ -210,7 +210,6 @@ static NSString *const CellIdentifier = @"MMPhotoAlbumCell";
                 [dictionary setObject:image forKey:MMPhotoOriginalImage];
                 // 加入数组
                 [result addObject:dictionary];
-                
                 //回传
                 if (i == totalNumber-1) {
                     self.completion(result, _isOrigin, NO);

@@ -104,9 +104,9 @@
 		8BFCD9141FB548E600C603E7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8BFCD9481FB551C000C603E7 /* default_bar@2x.png */,
 				8B2D5E6B1FB5ADD7004CC67A /* IMG_4808.JPG */,
 				8B2D5E6C1FB5ADD7004CC67A /* IMG_5225.JPG */,
-				8BFCD9481FB551C000C603E7 /* default_bar@2x.png */,
 				8BFCD91D1FB548E600C603E7 /* Main.storyboard */,
 				8BFCD9201FB548E600C603E7 /* Assets.xcassets */,
 				8BFCD9221FB548E600C603E7 /* LaunchScreen.storyboard */,
