@@ -6,6 +6,7 @@
 
 ![MMPhotoPicker](Screenshot.png)
 
+
 `MMPhotoPicker`基于`Photos`框架，集成了图片选择器（支持多选、单选、对图片进行裁剪、选择原图、可预览）以及创建自定义相册，并保存图片到自定义相册。若想使用基于`AssetsLibrary`框架的图片选择器，点击[这里](https://github.com/CheeryLau/MMImagePicker)。
 
 
@@ -79,7 +80,6 @@ MMPhotoUtil类中：
 ## 注意
 
 1. 需要在Info.plist中添加隐私授权：`Privacy - Photo Library Usage Description`
-
 2. 相册列表要根据手机语言环境显示语言，需设置`Localized resources can be mixed` 为 `YES`
 
 
