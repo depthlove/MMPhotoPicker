@@ -79,8 +79,8 @@ MMPhotoUtil类中：
 
 ## 注意
 
-1. 需要在Info.plist中添加隐私授权：`Privacy - Photo Library Usage Description`
-2. 相册列表要根据手机语言环境显示语言，需设置`Localized resources can be mixed` 为 `YES`
+1. 需要在Info.plist中添加隐私授权：`Privacy - Photo Library Usage Description`；
+2. 如果相册名称需要根据手机语言环境显示相应语言，需要在Info.plist中设置`Localized resources can be mixed` 为 `YES`。
 
 
 ## END
