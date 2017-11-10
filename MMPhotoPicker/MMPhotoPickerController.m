@@ -87,11 +87,12 @@
     [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
         NSArray<PHAsset *> *assets = [MMPhotoUtil getAllAssetWithAssetCollection:collection ascending:NO];
         if (assets.count > 0) {
-            MMPhotoAlbum *Album = [[MMPhotoAlbum alloc] init];
-            Album.name = collection.localizedTitle;
-            Album.assetCount = assets.count;
-            Album.coverAsset = assets.firstObject;
-            [self.photoAlbums addObject:Album];
+            MMPhotoAlbum *album = [[MMPhotoAlbum alloc] init];
+            album.name = collection.localizedTitle;
+            album.assetCount = assets.count;
+            album.coverAsset = assets.firstObject;
+            album.collection = collection;
+            [self.photoAlbums addObject:album];
         }
     }];
     [self.tableView reloadData];
