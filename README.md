@@ -46,8 +46,11 @@ MMPhotoPickerController属性介绍：
 
 ```objc
 MMPhotoPickerController *mmVC = [[MMPhotoPickerController alloc] init];
+// 设置代理
 mmVC.delegate = self;
+// 设置显示空相册
 mmVC.showEmptyAlbum = YES;
+// 设置最大选择数目
 mmVC.maximumNumberOfImage = 9;
 UINavigationController *mmNav = [[UINavigationController alloc] initWithRootViewController:mmVC];
 [self.navigationController presentViewController:mmNav animated:YES completion:nil];
